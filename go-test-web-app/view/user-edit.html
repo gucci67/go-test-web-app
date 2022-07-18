@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ユーザ編集</title>
+</head>
+
+<body>
+	<h1>ユーザ編集</h1>
+	<p>ユーザID：{{.user.UserId}}の編集ページです。</p>
+	<form action="/user/edit" method="POST">
+		<label>会員ID</label>
+		<input type="text" name="id" value='{{.user.UserId}}' readonly>
+		<br>
+		<label>名前</label>
+		<input type="text" name="name" value='{{.user.Name}}'>
+		<br>
+		<label>メールアドレス</label>
+		<input type="text" name="address" value='{{.user.Address}}'>
+		<br>
+		<input type="submit" value="更新">
+	</form>
+</body>
+
+</html>

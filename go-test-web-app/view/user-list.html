@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ユーザ一覧</title>
+	<style>
+		table {
+			width: 25%;
+		}
+
+		.user {
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>ユーザ一覧</h1>
+	<table border="1">
+		<tr>
+			<th></th>
+			<th>ID</th>
+			<th>名前</th>
+			<th>メールアドレス</th>
+		</tr>
+		{{range .list}}
+		<tr class="user">
+			<td><a href="/user/edit/{{.UserId}}">編集</a></td>
+			<td>{{.UserId}}</td>
+			<td>{{.Name}}</td>
+			<td>{{.Address}}</td>
+		</tr>
+		{{end}}
+	</table>
+</body>
+
+</html>
