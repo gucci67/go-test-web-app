@@ -1,26 +1,23 @@
 package repository
 
 import (
-	"go-test-web-app/entity"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 var (
-	db  *gorm.DB
+	db  *sqlx.DB
 	err error
 )
 
 func Init() {
-	db, err = gorm.Open("sqlite3", "test.sqlite3")
+	db, err = sqlx.Open("postgres", "user=gotest password=gotest!password dbname=gotest sslmode=disable")
 	if err != nil {
 		panic("Failed to connect a database/n")
 	}
-	autoMigration()
 }
 
-func GetDB() *gorm.DB {
+func GetDB() *sqlx.DB {
 	return db
 }
 
@@ -28,8 +25,4 @@ func Close() {
 	if err := db.Close(); err != nil {
 		panic(err)
 	}
-}
-
-func autoMigration() {
-	db.AutoMigrate(&entity.User{})
 }

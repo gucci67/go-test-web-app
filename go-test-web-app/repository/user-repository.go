@@ -8,7 +8,17 @@ func (e *UserRepository) Select(userId int) (entity.User, error) {
 	db := GetDB()
 	var user entity.User
 
-	if err := db.Where("user_id = ?", userId).First(&user).Error; err != nil {
+	query := `
+		SELECT
+			*
+		FROM
+			users
+		WHERE
+			user_id = ?`
+
+	db.Get(user, query, userId)
+
+	if err := db.Get(&user, query, userId); err != nil {
 		return user, err
 	}
 
@@ -19,7 +29,13 @@ func (e *UserRepository) SelectAll() ([]entity.User, error) {
 	db := GetDB()
 	var users []entity.User
 
-	if err := db.Find(&users).Error; err != nil {
+	query := `
+		SELECT
+			*
+		FROM
+			users`
+
+	if err := db.Select(&users, query); err != nil {
 		return nil, err
 	}
 
@@ -29,7 +45,13 @@ func (e *UserRepository) SelectAll() ([]entity.User, error) {
 func (e *UserRepository) Insert(user entity.User) error {
 	db := GetDB()
 
-	if err := db.Create(&user).Error; err != nil {
+	query := `
+		INSERT INTO
+			users (name, address)
+		VALUES
+			(:name, :address)`
+
+	if _, err := db.NamedExec(query, user); err != nil {
 		return err
 	}
 
@@ -39,7 +61,14 @@ func (e *UserRepository) Insert(user entity.User) error {
 func (e *UserRepository) Update(user entity.User) error {
 	db := GetDB()
 
-	if err := db.Save(&user).Error; err != nil {
+	query := `
+		UPDATE
+			users
+		SET
+			name = :name
+			, address = :address`
+
+	if _, err := db.NamedExec(query, user); err != nil {
 		return err
 	}
 

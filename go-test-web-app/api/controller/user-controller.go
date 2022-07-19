@@ -52,7 +52,7 @@ func (u *UserController) CreateUser(c *gin.Context) {
 
 func (u *UserController) UpdateUser(c *gin.Context) {
 
-	userId, _ := strconv.Atoi(c.Param("id"))
+	userId, _ := strconv.Atoi(c.PostForm("id"))
 	name := c.PostForm("name")
 	address := c.PostForm("address")
 
